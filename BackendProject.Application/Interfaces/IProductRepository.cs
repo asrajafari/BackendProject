@@ -1,12 +1,7 @@
-﻿using BackendProject.Entities;
+﻿using BackendProject.Domain.Entities;
 
-namespace BackendProject.Repositories;
+namespace BackendProject.Application.Interfaces;
 
-public interface IProductRepository
+public interface IProductRepository : IGenericRepository<Product, int>
 {
-    Task<IEnumerable<Product>> GetAllAsync();
-    Task<Product?> GetByIdAsync(int id);
-    Task AddAsync(Product product);
-    Task UpdateAsync(Product product);
-    Task DeleteAsync(int id);
 }

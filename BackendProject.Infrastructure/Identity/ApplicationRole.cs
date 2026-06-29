@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace BackendProject.Identity;
-
-public class ApplicationRole : IdentityRole<Guid>
+namespace BackendProject.Infrastructure.Identity
 {
+    public class ApplicationRole : IdentityRole<Guid>
+    {
+    }
 }

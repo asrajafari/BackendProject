@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 
-namespace BackendProject.Identity;
+namespace BackendProject.Infrastructure.Identity;
 
 public class ApplicationUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<ApplicationUser, ApplicationRole>
 {

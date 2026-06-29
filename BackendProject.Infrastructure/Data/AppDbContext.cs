@@ -1,9 +1,8 @@
-﻿using BackendProject.Entities; 
-using BackendProject.Identity; 
+﻿using BackendProject.Domain.Entities;
+using BackendProject.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-
-namespace BackendProject.Data;
+namespace BackendProject.Infrastructure.Data;
 
 public class AppDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
 {

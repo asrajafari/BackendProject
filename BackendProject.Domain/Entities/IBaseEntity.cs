@@ -1,6 +1,6 @@
-﻿namespace BackendProject.Entities;
+﻿namespace BackendProject.Domain.Entities;
 
 public interface IBaseEntity<TKey>
 {
-    TKey Id { get; set; }
+    TKey Id { get; }
 }

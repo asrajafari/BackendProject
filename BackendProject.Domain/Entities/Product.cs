@@ -1,12 +1,38 @@
-﻿using System.ComponentModel.DataAnnotations;
-using BackendProject.Entities;
-
-namespace BackendProject.Entities;
+﻿namespace BackendProject.Domain.Entities;
 
 public class Product : BaseEntity<int>
 {
-    [Required]
-    [MaxLength(100)]
-    public required string Name { get; set; }
-    public decimal Price { get; set; }
+    public string Name { get; private set; } = string.Empty;
+
+    public decimal Price { get; private set; }
+
+    private Product()
+    {
+        
+    }
+
+    public Product(string name, decimal price)
+    {
+        ChangeName(name);
+        ChangePrice(price);
+    }
+
+    public void ChangeName(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Product name cannot be empty.");
+
+        if (name.Length > 100)
+            throw new ArgumentException("Product name cannot exceed 100 characters.");
+
+        Name = name;
+    }
+
+    public void ChangePrice(decimal price)
+    {
+        if (price <= 0)
+            throw new ArgumentException("Price must be greater than zero.");
+
+        Price = price;
+    }
 }

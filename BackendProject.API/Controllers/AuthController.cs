@@ -1,14 +1,15 @@
-﻿using BackendProject.DTOs;
-using BackendProject.Services;
+﻿using BackendProject.Application.DTOs.Auth;
+using BackendProject.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BackendProject.Controllers;
+namespace BackendProject.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
-    private readonly IIdentityService _identityService; 
+    private readonly IIdentityService _identityService;
 
     public AuthController(IIdentityService identityService)
     {
@@ -16,46 +17,45 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] RegisterDto model)
+    public async Task<IActionResult> Register(RegisterRequest request)
     {
-        try
-        {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
 
-            var message = await _identityService.RegisterUserAsync(model);
+        var result = await _identityService.RegisterUserAsync(request);
 
-            if (message == "Success")
-            {
-                return Ok(new { message = "ثبت ‌نام با موفقیت انجام شد." });
-            }
+        if (!result.IsSuccess)
+            return BadRequest(result);
 
-            return BadRequest(new { message });
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { message = "خطای داخلی سرور", details = ex.Message });
-        }
+        return Ok(result);
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginDto model)
+    public async Task<IActionResult> Login(LoginRequest request)
     {
-        try
-        {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
 
-            var response = await _identityService.LoginUserAsync(model);
-        
-            if (response.Message == "Success")
-            {
-                return Ok(new { token = response.Token });
-            }
-        
-            return Unauthorized(new { message = response.Message });
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { message = "خطای داخلی سرور", details = ex.Message });
-        }
+        var result = await _identityService.LoginUserAsync(request);
+
+        if (!result.IsSuccess)
+            return Unauthorized(result);
+
+        return Ok(result);
+    }
+
+    [HttpPost("assign-role")]
+    [Authorize(Roles = "SuperAdmin")]
+    public async Task<IActionResult> AssignRole(AssignRoleRequest request)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var result = await _identityService.AssignRoleToUserAsync(request);
+
+        if (!result.IsSuccess)
+            return BadRequest(result);
+
+        return Ok(result);
     }
 }

@@ -1,13 +1,19 @@
-﻿using BackendProject.Entities;
+﻿using BackendProject.Domain.Entities;
 
-namespace BackendProject.Repositories;
+namespace BackendProject.Application.Interfaces;
 
-public interface IGenericRepository<T, TKey> where T : class, IBaseEntity<TKey>
+public interface IGenericRepository<TEntity, TKey>
+    where TEntity : class, IBaseEntity<TKey>
 {
-    Task<T?> GetByIdAsync(TKey id);
-    Task<IEnumerable<T>> GetAllAsync();
-    void Add(T entity);
-    void Update(T entity);
-    void Delete(T entity);
+    Task<TEntity?> GetByIdAsync(TKey id);
+
+    Task<IEnumerable<TEntity>> GetAllAsync();
+
+    void Add(TEntity entity);
+
+    void Update(TEntity entity);
+
+    void Delete(TEntity entity);
+
     Task SaveChangesAsync();
 }
