@@ -4,9 +4,9 @@ namespace BackendProject.Application.Interfaces;
 
 public interface IIdentityService
 {
-    Task<RegisterResponse> RegisterUserAsync(RegisterRequest model);
+    Task<RegisterResponseDto> RegisterUserAsync(RegisterRequestDto model);
 
-    Task<LoginResponse> LoginUserAsync(LoginRequest model);
+    Task<LoginResponseDto> LoginUserAsync(LoginRequestDto model);
 
-    Task<AssignRoleResponse> AssignRoleToUserAsync(AssignRoleRequest model);
+    Task<AssignRoleResponseDto> AssignRoleToUserAsync(AssignRoleRequestDto model);
 }

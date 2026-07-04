@@ -17,12 +17,12 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register(RegisterRequest request)
+    public async Task<IActionResult> Register(RegisterRequestDto requestDto)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var result = await _identityService.RegisterUserAsync(request);
+        var result = await _identityService.RegisterUserAsync(requestDto);
 
         if (!result.IsSuccess)
             return BadRequest(result);
@@ -31,12 +31,12 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login(LoginRequest request)
+    public async Task<IActionResult> Login(LoginRequestDto requestDto)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var result = await _identityService.LoginUserAsync(request);
+        var result = await _identityService.LoginUserAsync(requestDto);
 
         if (!result.IsSuccess)
             return Unauthorized(result);
@@ -46,12 +46,12 @@ public class AuthController : ControllerBase
 
     [HttpPost("assign-role")]
     [Authorize(Roles = "SuperAdmin")]
-    public async Task<IActionResult> AssignRole(AssignRoleRequest request)
+    public async Task<IActionResult> AssignRole(AssignRoleRequestDto requestDto)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var result = await _identityService.AssignRoleToUserAsync(request);
+        var result = await _identityService.AssignRoleToUserAsync(requestDto);
 
         if (!result.IsSuccess)
             return BadRequest(result);

@@ -9,14 +9,14 @@ public class ProductProfile : Profile
 {
     public ProductProfile()
     {
-        CreateMap<Product, GetProductResponse>();
+        CreateMap<Product, GetProductResponseDto>();
 
-        CreateMap<Product, GetProductsResponse>();
+        CreateMap<Product, GetProductsResponseDto>();
 
-        CreateMap<Product, CreateProductResponse>();
+        CreateMap<Product, CreateProductResponseDto>();
 
-        CreateMap<Product, UpdateProductResponse>();
+        CreateMap<Product, UpdateProductResponseDto>();
 
-        CreateMap<Product, DeleteProductResponse>();
+        CreateMap<Product, DeleteProductResponseDto>();
     }
 }

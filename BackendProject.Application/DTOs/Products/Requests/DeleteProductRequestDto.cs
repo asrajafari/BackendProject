@@ -2,7 +2,7 @@
 
 namespace BackendProject.Application.DTOs.Products.Requests;
 
-public class DeleteProductRequest
+public class DeleteProductRequestDto
 {
     [Required]
     public int Id { get; set; }

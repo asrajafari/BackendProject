@@ -8,7 +8,6 @@ public class Product : BaseEntity<int>
 
     private Product()
     {
-        
     }
 
     public Product(string name, decimal price)
@@ -26,6 +25,7 @@ public class Product : BaseEntity<int>
             throw new ArgumentException("Product name cannot exceed 100 characters.");
 
         Name = name;
+        MarkAsUpdated();
     }
 
     public void ChangePrice(decimal price)
@@ -34,5 +34,6 @@ public class Product : BaseEntity<int>
             throw new ArgumentException("Price must be greater than zero.");
 
         Price = price;
+        MarkAsUpdated();
     }
 }

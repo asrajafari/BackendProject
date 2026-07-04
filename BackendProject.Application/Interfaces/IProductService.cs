@@ -5,13 +5,13 @@ namespace BackendProject.Application.Interfaces;
 
 public interface IProductService
 {
-    Task<IEnumerable<GetProductsResponse>> GetAllAsync(GetProductsRequest request);
+    Task<IEnumerable<GetProductsResponseDto>> GetAllAsync(GetProductsRequestDto requestDto);
 
-    Task<GetProductResponse?> GetByIdAsync(GetProductRequest request);
+    Task<GetProductResponseDto?> GetByIdAsync(GetProductRequestDto requestDto);
 
-    Task<CreateProductResponse> CreateAsync(CreateProductRequest request);
+    Task<CreateProductResponseDto> CreateAsync(CreateProductRequestDto requestDto);
 
-    Task<UpdateProductResponse> UpdateAsync(UpdateProductRequest request);
+    Task<UpdateProductResponseDto> UpdateAsync(UpdateProductRequestDto requestDto);
 
-    Task<DeleteProductResponse> DeleteAsync(DeleteProductRequest request);
+    Task<DeleteProductResponseDto> DeleteAsync(DeleteProductRequestDto requestDto);
 }

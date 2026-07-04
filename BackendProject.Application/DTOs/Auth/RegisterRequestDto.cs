@@ -2,7 +2,7 @@
 
 namespace BackendProject.Application.DTOs.Auth;
 
-public class RegisterRequest
+public class RegisterRequestDto
 {
     [Required]
     [EmailAddress]

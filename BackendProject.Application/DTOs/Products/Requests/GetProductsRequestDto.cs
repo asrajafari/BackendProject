@@ -1,5 +1,5 @@
 ﻿namespace BackendProject.Application.DTOs.Products.Requests;
 
-public class GetProductsRequest
+public class GetProductsRequestDto
 {
 }

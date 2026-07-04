@@ -22,7 +22,7 @@ public class ProductsController : ControllerBase
     {
         try
         {
-            var products = await _productService.GetAllAsync(new GetProductsRequest());
+            var products = await _productService.GetAllAsync(new GetProductsRequestDto());
             return Ok(products);
         }
         catch (Exception ex)
@@ -37,7 +37,7 @@ public class ProductsController : ControllerBase
     {
         try
         {
-            var product = await _productService.GetByIdAsync(new GetProductRequest { Id = id });
+            var product = await _productService.GetByIdAsync(new GetProductRequestDto { Id = id });
 
             if (product is null)
                 return NotFound(new { message = "محصول یافت نشد." });
@@ -52,14 +52,14 @@ public class ProductsController : ControllerBase
 
     [HttpPost]
     [Authorize(Roles = "Admin,SuperAdmin")]
-    public async Task<IActionResult> Create([FromBody] CreateProductRequest request)
+    public async Task<IActionResult> Create([FromBody] CreateProductRequestDto requestDto)
     {
         try
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _productService.CreateAsync(request);
+            var result = await _productService.CreateAsync(requestDto);
             return Ok(result);
         }
         catch (Exception ex)
@@ -70,14 +70,14 @@ public class ProductsController : ControllerBase
 
     [HttpPut]
     [Authorize(Roles = "Admin,SuperAdmin")]
-    public async Task<IActionResult> Update([FromBody] UpdateProductRequest request)
+    public async Task<IActionResult> Update([FromBody] UpdateProductRequestDto requestDto)
     {
         try
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _productService.UpdateAsync(request);
+            var result = await _productService.UpdateAsync(requestDto);
             return Ok(result);
         }
         catch (Exception ex)
@@ -88,14 +88,14 @@ public class ProductsController : ControllerBase
 
     [HttpDelete]
     [Authorize(Roles = "Admin,SuperAdmin")]
-    public async Task<IActionResult> Delete([FromBody] DeleteProductRequest request)
+    public async Task<IActionResult> Delete([FromBody] DeleteProductRequestDto requestDto)
     {
         try
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _productService.DeleteAsync(request);
+            var result = await _productService.DeleteAsync(requestDto);
             return Ok(result);
         }
         catch (Exception ex)

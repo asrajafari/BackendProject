@@ -2,8 +2,11 @@
 
 namespace BackendProject.Application.DTOs.Products.Requests;
 
-public class CreateProductRequest
+public class UpdateProductRequestDto
 {
+    [Required]
+    public int Id { get; set; }
+
     [Required]
     [MaxLength(100)]
     public string Name { get; set; } = string.Empty;

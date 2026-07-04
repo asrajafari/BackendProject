@@ -13,6 +13,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackendProject.Infrastructu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackendProject.API", "BackendProject.API\BackendProject.API.csproj", "{F93CD5A8-298F-446E-BE05-C7C95F12A038}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1-BackendProject.Domain", "1-BackendProject.Domain", "{7F5F995B-3BEC-4301-A472-9B3E5EFE1848}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2-BackendProject.Application", "2-BackendProject.Application", "{661E3BB6-69B2-4B74-A43C-EE765E6ACB8B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3-BackendProject.Infrastructure", "3-BackendProject.Infrastructure", "{EFE8A49E-049D-4A6E-95C5-625F25D0C011}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4-BackendProject.API", "4-BackendProject.API", "{426F4C24-0E8E-48BE-892E-DFFBAB944177}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,5 +43,11 @@ Global
 		{F93CD5A8-298F-446E-BE05-C7C95F12A038}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F93CD5A8-298F-446E-BE05-C7C95F12A038}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F93CD5A8-298F-446E-BE05-C7C95F12A038}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{64DAB721-32BE-475C-A625-E8E28B1532B4} = {7F5F995B-3BEC-4301-A472-9B3E5EFE1848}
+		{134497DC-0B79-455D-A5CF-AF36A9BA0359} = {661E3BB6-69B2-4B74-A43C-EE765E6ACB8B}
+		{F93CD5A8-298F-446E-BE05-C7C95F12A038} = {426F4C24-0E8E-48BE-892E-DFFBAB944177}
+		{5245CA6C-F2CB-4276-9EF8-C517A52B66EA} = {EFE8A49E-049D-4A6E-95C5-625F25D0C011}
 	EndGlobalSection
 EndGlobal

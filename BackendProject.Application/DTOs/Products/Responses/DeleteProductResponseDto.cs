@@ -1,8 +1,8 @@
 ﻿namespace BackendProject.Application.DTOs.Products.Responses;
 
-public class CreateProductResponse
+public class DeleteProductResponseDto
 {
-    public int Id { get; set; }
+    public bool IsSuccess { get; set; }
 
     public string Message { get; set; } = string.Empty;
 }

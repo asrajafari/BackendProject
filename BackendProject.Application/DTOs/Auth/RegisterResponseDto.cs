@@ -1,6 +1,6 @@
 ﻿namespace BackendProject.Application.DTOs.Auth;
 
-public class RegisterResponse
+public class RegisterResponseDto
 {
     public bool IsSuccess { get; set; }
 

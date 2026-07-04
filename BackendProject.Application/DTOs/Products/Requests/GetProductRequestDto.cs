@@ -2,7 +2,7 @@
 
 namespace BackendProject.Application.DTOs.Products.Requests;
 
-public class GetProductRequest
+public class GetProductRequestDto
 {
     [Required]
     public int Id { get; set; }

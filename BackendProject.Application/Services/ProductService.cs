@@ -19,56 +19,56 @@ public class ProductService : IProductService
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<GetProductsResponse>> GetAllAsync(GetProductsRequest request)
+    public async Task<IEnumerable<GetProductsResponseDto>> GetAllAsync(GetProductsRequestDto requestDto)
     {
         var products = await _repository.GetAllAsync();
 
-        return _mapper.Map<IEnumerable<GetProductsResponse>>(products);
+        return _mapper.Map<IEnumerable<GetProductsResponseDto>>(products);
     }
 
-    public async Task<GetProductResponse?> GetByIdAsync(GetProductRequest request)
+    public async Task<GetProductResponseDto?> GetByIdAsync(GetProductRequestDto requestDto)
     {
-        var product = await _repository.GetByIdAsync(request.Id);
+        var product = await _repository.GetByIdAsync(requestDto.Id);
 
         if (product is null)
             return null;
 
-        return _mapper.Map<GetProductResponse>(product);
+        return _mapper.Map<GetProductResponseDto>(product);
     }
 
-    public async Task<CreateProductResponse> CreateAsync(CreateProductRequest request)
+    public async Task<CreateProductResponseDto> CreateAsync(CreateProductRequestDto requestDto)
     {
         var product = new Product(
-            request.Name,
-            request.Price);
+            requestDto.Name,
+            requestDto.Price);
 
         _repository.Add(product);
 
         await _repository.SaveChangesAsync();
 
-        return _mapper.Map<CreateProductResponse>(product);
+        return _mapper.Map<CreateProductResponseDto>(product);
     }
 
-    public async Task<UpdateProductResponse> UpdateAsync(UpdateProductRequest request)
+    public async Task<UpdateProductResponseDto> UpdateAsync(UpdateProductRequestDto requestDto)
     {
-        var product = await _repository.GetByIdAsync(request.Id);
+        var product = await _repository.GetByIdAsync(requestDto.Id);
 
         if (product is null)
             throw new Exception("Product not found.");
 
-        product.ChangeName(request.Name);
-        product.ChangePrice(request.Price);
+        product.ChangeName(requestDto.Name);
+        product.ChangePrice(requestDto.Price);
 
         _repository.Update(product);
 
         await _repository.SaveChangesAsync();
 
-        return _mapper.Map<UpdateProductResponse>(product);
+        return _mapper.Map<UpdateProductResponseDto>(product);
     }
 
-    public async Task<DeleteProductResponse> DeleteAsync(DeleteProductRequest request)
+    public async Task<DeleteProductResponseDto> DeleteAsync(DeleteProductRequestDto requestDto)
     {
-        var product = await _repository.GetByIdAsync(request.Id);
+        var product = await _repository.GetByIdAsync(requestDto.Id);
 
         if (product is null)
             throw new Exception("Product not found.");
@@ -77,7 +77,7 @@ public class ProductService : IProductService
 
         await _repository.SaveChangesAsync();
 
-        return new DeleteProductResponse
+        return new DeleteProductResponseDto
         {
             IsSuccess = true,
             Message = "Product deleted successfully."

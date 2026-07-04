@@ -2,7 +2,7 @@
 
 namespace BackendProject.Application.DTOs.Auth;
 
-public class AssignRoleRequest
+public class AssignRoleRequestDto
 {
     [Required]
     public Guid UserId { get; set; }

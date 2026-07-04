@@ -1,6 +1,6 @@
 ﻿namespace BackendProject.Application.DTOs.Auth;
 
-public class AssignRoleResponse
+public class AssignRoleResponseDto
 {
     public bool IsSuccess { get; set; }
 

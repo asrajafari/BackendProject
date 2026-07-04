@@ -25,7 +25,7 @@ public class IdentityService : IIdentityService
         _configuration = configuration;
     }
 
-    public async Task<RegisterResponse> RegisterUserAsync(RegisterRequest model)
+    public async Task<RegisterResponseDto> RegisterUserAsync(RegisterRequestDto model)
     {
         var user = new ApplicationUser
         {
@@ -39,7 +39,7 @@ public class IdentityService : IIdentityService
 
         if (!result.Succeeded)
         {
-            return new RegisterResponse
+            return new RegisterResponseDto
             {
                 IsSuccess = false,
                 Message = result.Errors.FirstOrDefault()?.Description ?? "خطای نامشخص"
@@ -48,20 +48,20 @@ public class IdentityService : IIdentityService
 
         await _userManager.AddToRoleAsync(user, "User");
 
-        return new RegisterResponse
+        return new RegisterResponseDto
         {
             IsSuccess = true,
             Message = "ثبت‌ نام با موفقیت انجام شد."
         };
     }
 
-    public async Task<LoginResponse> LoginUserAsync(LoginRequest model)
+    public async Task<LoginResponseDto> LoginUserAsync(LoginRequestDto model)
     {
         var user = await _userManager.FindByEmailAsync(model.Email);
 
         if (user == null)
         {
-            return new LoginResponse
+            return new LoginResponseDto
             {
                 IsSuccess = false,
                 Message = "ایمیل یا رمز عبور اشتباه است."
@@ -72,7 +72,7 @@ public class IdentityService : IIdentityService
 
         if (!result.Succeeded)
         {
-            return new LoginResponse
+            return new LoginResponseDto
             {
                 IsSuccess = false,
                 Message = result.IsLockedOut
@@ -83,7 +83,7 @@ public class IdentityService : IIdentityService
 
         var token = await GenerateJwtTokenAsync(user);
 
-        return new LoginResponse
+        return new LoginResponseDto
         {
             IsSuccess = true,
             Token = token,
@@ -91,12 +91,12 @@ public class IdentityService : IIdentityService
         };
     }
 
-    public async Task<AssignRoleResponse> AssignRoleToUserAsync(AssignRoleRequest model)
+    public async Task<AssignRoleResponseDto> AssignRoleToUserAsync(AssignRoleRequestDto model)
     {
         var validRoles = new[] { "User", "Admin", "SuperAdmin" };
         if (!validRoles.Contains(model.RoleName))
         {
-            return new AssignRoleResponse
+            return new AssignRoleResponseDto
             {
                 IsSuccess = false,
                 Message = "رول نامعتبر است."
@@ -106,7 +106,7 @@ public class IdentityService : IIdentityService
         var user = await _userManager.FindByIdAsync(model.UserId.ToString());
         if (user == null)
         {
-            return new AssignRoleResponse
+            return new AssignRoleResponseDto
             {
                 IsSuccess = false,
                 Message = "کاربر یافت نشد."
@@ -121,7 +121,7 @@ public class IdentityService : IIdentityService
 
         var result = await _userManager.AddToRoleAsync(user, model.RoleName);
 
-        return new AssignRoleResponse
+        return new AssignRoleResponseDto
         {
             IsSuccess = result.Succeeded,
             Message = result.Succeeded
@@ -147,17 +147,18 @@ public class IdentityService : IIdentityService
             claims.Add(new Claim(ClaimTypes.Role, role));
         }
 
-        var jwtKey = _configuration["Jwt:Key"]
-                     ?? throw new InvalidOperationException("Jwt:Key تنظیم نشده است.");
+        var jwtKey = _configuration["Jwt:Key"] ?? throw new InvalidOperationException("Jwt:Key تنظیم نشده است.");
+        var issuer = _configuration["Jwt:Issuer"] ?? "YourApp";
+        var audience = _configuration["Jwt:Audience"] ?? "YourApp";
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
         
         var token = new JwtSecurityToken(
-            issuer: _configuration["Jwt:Issuer"] ?? "YourApp",
-            audience: _configuration["Jwt:Audience"] ?? "YourApp",
+            issuer: issuer,
+            audience: audience,
             claims: claims,
-            expires: DateTime.Now.AddHours(2),
+            expires: DateTime.UtcNow.AddHours(2),
             signingCredentials: creds
         );
 

@@ -1,6 +1,6 @@
 ﻿namespace BackendProject.Application.DTOs.Products.Responses;
 
-public class GetProductsResponse
+public class GetProductsResponseDto
 {
     public int Id { get; set; }
 
