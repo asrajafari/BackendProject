@@ -48,10 +48,13 @@ public class IdentityService : IIdentityService
 
         await _userManager.AddToRoleAsync(user, "User");
 
+        var token = await GenerateJwtTokenAsync(user);
+
         return new RegisterResponseDto
         {
             IsSuccess = true,
-            Message = "ثبت‌ نام با موفقیت انجام شد."
+            Token = token,
+            Message = "ثبت‌نام با موفقیت انجام شد."
         };
     }
 
@@ -139,7 +142,7 @@ public class IdentityService : IIdentityService
             new Claim(JwtRegisteredClaimNames.Sub, user.Email ?? string.Empty),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim("FirstName", user.FirstName)
+            new Claim("FirstName", user.FirstName ?? string.Empty)
         };
 
         foreach (var role in roles)
@@ -147,9 +150,11 @@ public class IdentityService : IIdentityService
             claims.Add(new Claim(ClaimTypes.Role, role));
         }
 
-        var jwtKey = _configuration["Jwt:Key"] ?? throw new InvalidOperationException("Jwt:Key تنظیم نشده است.");
-        var issuer = _configuration["Jwt:Issuer"] ?? "YourApp";
-        var audience = _configuration["Jwt:Audience"] ?? "YourApp";
+        var jwtKey = _configuration["Jwt:Key"] 
+            ?? throw new InvalidOperationException("Jwt:Key تنظیم نشده است.");
+
+        var issuer = _configuration["Jwt:Issuer"] ?? "BackendProject";
+        var audience = _configuration["Jwt:Audience"] ?? "BackendProject";
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
