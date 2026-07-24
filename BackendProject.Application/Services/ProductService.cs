@@ -42,6 +42,8 @@ public class ProductService : IProductService
             requestDto.Name,
             requestDto.Price);
 
+        product.Stock = requestDto.Stock;
+
         _repository.Add(product);
 
         await _repository.SaveChangesAsync();
@@ -58,6 +60,7 @@ public class ProductService : IProductService
 
         product.ChangeName(requestDto.Name);
         product.ChangePrice(requestDto.Price);
+        product.Stock = requestDto.Stock;
 
         _repository.Update(product);
 

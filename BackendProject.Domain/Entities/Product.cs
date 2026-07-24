@@ -10,6 +10,7 @@ public class Product : BaseEntity<int>
     {
     }
 
+    
     public Product(string name, decimal price)
     {
         ChangeName(name);
@@ -28,6 +29,8 @@ public class Product : BaseEntity<int>
         MarkAsUpdated();
     }
 
+    public int Stock { get; set; } = 0; 
+    
     public void ChangePrice(decimal price)
     {
         if (price <= 0)

@@ -1,4 +1,5 @@
-﻿using BackendProject.Application.Interfaces;
+﻿using System.Linq.Expressions;
+using BackendProject.Application.Interfaces;
 using BackendProject.Domain.Entities;
 using BackendProject.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,26 @@ public class GenericRepository<TEntity, TKey>
     public async Task<IEnumerable<TEntity>> GetAllAsync()
     {
         return await _dbSet.ToListAsync();
+    }
+
+    public async Task<TEntity?> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
+    {
+        return await _dbSet.FirstOrDefaultAsync(predicate);
+    }
+
+    public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
+    {
+        return await _dbSet.Where(predicate).ToListAsync();
+    }
+
+    public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
+    {
+        return await _dbSet.AnyAsync(predicate);
+    }
+
+    public IQueryable<TEntity> AsQueryable()
+    {
+        return _dbSet.AsQueryable();
     }
 
     public void Add(TEntity entity)
